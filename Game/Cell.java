@@ -8,10 +8,10 @@ import java.util.*;
 public interface Cell {
 
 
-
     /**
+     * Mutierend - ergänzt die aufgerufene Cell mit denen der übergebenen
      * @param c
-     * @return
+     * @return this
      */
     public Cell merge(Cell c);
 
@@ -22,7 +22,7 @@ public interface Cell {
 
     /**
      * @param v
-     * @return
+     * @return gibts das passende Value
      */
     public Value getValue(Value v);
 
@@ -33,9 +33,15 @@ public interface Cell {
     public Value setValue(Value v);
 
     /**
+     * Mutierend - ergänzt den Value der Cell mit dem der übergebenen
      * @param v
-     * @return
+     * @return neuer value
      */
     public Value mergeValue(Value v);
 
+    /**
+     *
+     * @return
+     */
+    public Set<ValueType> getValueTypes();
 }

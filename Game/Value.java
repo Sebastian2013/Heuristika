@@ -6,59 +6,62 @@ import java.util.*;
  * 
  */
 public class Value {
-    /**
-     * @param vt
-     * @return
-     */
-    public static Value  valueFactory(ValueType vt) {
-        return null;
-    }
 
     /**
      *
      */
     public final ValueType valueType;
 
-
     /**
-     * 
-     */
-    public Value(ValueType valueType) {
-        this.valueType=valueType;
-    }
-
-
-
-    /**
-     * 
+     *
      */
     private byte valueCount;
 
 
+    /**
+     * Konstruktor erzeugt einen  Value mit dem gegebnen ValueType
+     * @param valueType
+     */
+    public Value(ValueType valueType) {
+        this(valueType,(byte)0);
+    }
+
+    /**
+     * Kopierkonstruktor
+     * @param v
+     */
+    public Value(Value v) {
+        this(v.valueType,v.getValueCount());
+    }
 
 
     /**
-     * @param vt
+     * Hauptkonstruktor
+     * @param valueType
+     * @param count
      */
-    private void Value(ValueType vt) {
-        // TODO implement here
+    public Value(ValueType valueType, byte count) {
+        this.valueType=valueType;
+        valueCount=count;
     }
+
+
 
     /**
      * @return
      */
     public byte getValueCount() {
-        // TODO implement here
-        return 0;
+        return valueCount;
     }
 
     /**
-     * @param b
-     * @return
+     * @param b setzt auf neue Anzahl
+     * @return  gibt die alte Anzahl
      */
     public byte setValueCount(byte b) {
-        // TODO implement here
-        return 0;
+        byte old=valueCount;
+        valueCount=b;
+        return old;
     }
 
     /**
@@ -66,8 +69,13 @@ public class Value {
      * @return
      */
     public byte mergeValueCount(byte b) {
-        // TODO implement here
-        return 0;
+        int temp=valueCount+b;
+        if(temp>Byte.MAX_VALUE){
+            valueCount=Byte.MAX_VALUE;
+        }else{
+            valueCount=(byte)temp;
+        }
+        return valueCount;
     }
 
 }

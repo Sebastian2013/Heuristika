@@ -8,9 +8,6 @@ import java.util.*;
 public interface World {
 
 
-
-
-
     /**
      * @return
      */
@@ -21,27 +18,21 @@ public interface World {
      */
     public int getDimensionY();
 
-    /**
-     * @return
-     */
-    public int getDimensionZ();
 
     /**
      * @param x
      * @param y
-     * @param z
      * @return
      */
-    public Cell getCell(int x, int y, int z);
+    public Cell getCell(int x, int y);
 
     /**
      * @param x
      * @param y
-     * @param z
      * @param c
      * @return
      */
-    public Cell setCell(int x, int y, int z, Cell c);
+    public Cell setCell(int x, int y, Cell c);
 
     /**
      * @return
@@ -49,22 +40,19 @@ public interface World {
     public World getEmptyWorld();
 
     /**
-     * @param vt
+     * @param v
      * @param x
      * @param y
-     * @param z
      * @return
      */
-    public byte getValue(ValueType vt, int x, int y, int z);
+    public Value getValue(int x, int y, Value v);
 
     /**
-     * @param vt
+     * @param v
      * @param x
      * @param y
-     * @param z
-     * @param value
      * @return
      */
-    public byte setValue(ValueType vt, int x, int y, int z, byte value);
+    public Value setValue(int x, int y, Value v);
 
 }
