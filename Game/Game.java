@@ -27,7 +27,7 @@ public class Game {
     /**
      *
      */
-    public double refreshRate = 2;
+    public double refreshRate = 1;
 
 
 
@@ -50,7 +50,7 @@ public class Game {
      *
      */
     public void genWorld() {
-        wOld = WorldImpl1.worldGenerator(10, 30, new CellImpl1());
+        wOld = WorldImpl1.worldGenerator(10, 10, new CellImpl1());
         wOld=placeRdmValue(wOld, ValueType.grass, 2);
         wNew=wOld;
         //drawPic(0, ValueType.grass, wNew);
@@ -91,7 +91,7 @@ public class Game {
 
         Logic logic= LogicImpl1.getLogic();
         World w1,w2;
-        JFrame frameGrass=null , frameBush=null;
+        JFrame frameGrass=null , frameBush=null , frameWater=null;
         long time1,time2;
         do{
             wOld=wNew;
@@ -109,6 +109,7 @@ public class Game {
             //drawPic(0, ValueType.grass, wNew);
             frameGrass=drawPicSwing(ValueType.grass,wNew,frameGrass);
             frameBush=drawPicSwing(ValueType.bush,wNew,frameBush);
+            frameWater=drawPicSwing(ValueType.water,wNew,frameWater);
 
             System.out.println(time2-time1);
 

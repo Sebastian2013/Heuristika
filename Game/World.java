@@ -40,6 +40,13 @@ public interface World {
     public World getEmptyWorld();
 
     /**
+     *
+     * @param w world to be merged with
+     * @return this
+     */
+    public World mergeWorld(World w);
+
+    /**
      * @param v
      * @param x
      * @param y

@@ -65,6 +65,22 @@ public class WorldImpl1 implements World{
     }
 
     @Override
+    public World mergeWorld(World w) {
+        int wx=w.getDimensionX();
+        int wy=w.getDimensionY();
+        for(int x=0; x<wx;x++){
+            for(int y=0; y< wy;y++){
+                cells[x][y].merge(w.getCell(x,y));
+            }
+        }
+
+
+
+
+        return this;
+    }
+
+    @Override
     public Value getValue(int x, int y, Value v) {
         return getCell(x,y).getValue(v);
     }

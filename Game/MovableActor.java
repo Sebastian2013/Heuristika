@@ -11,7 +11,7 @@ public interface MovableActor extends Actor {
      * @param c
      * @return
      */
-    public short rate(Cell c);
+    public int rate(Cell c);
 
     /**
      * @param c
@@ -23,13 +23,13 @@ public interface MovableActor extends Actor {
      * @param v
      * @return
      */
-    public MovableActor setPos(Vector v );
+    public MovableActor setPos(Vector<Float> v );
 
     /**
      * @param a
      * @return
      */
-    public short rate(Actor a);
+    public int rate(Actor a);
 
     /**
      * @return

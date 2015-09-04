@@ -2,6 +2,8 @@ package Game.Implementations;
 
 import Game.*;
 
+import java.util.Random;
+
 /**
  *
  */
@@ -10,13 +12,25 @@ public class LogicImpl1 implements Logic{
 
     public static Logic getLogic(){
         if(logic==null)
-            logic=new LogicImpl1();
+            logic=new LogicImpl1(42);
         return  logic;
+    }
+
+
+    private int rndNumber;
+    private Random rndGen;
+
+    private LogicImpl1(int rnd){
+        rndNumber=rnd;
+        rndGen = new Random(rndNumber);
     }
 
     @Override
     public World simWorld(World w) {
-        return growBush(growGrass(w));
+        World world;
+        world=rain(w,rndNumber);
+        world =growGrass(world);
+        return growBush(world);
     }
 
     @Override
@@ -34,6 +48,51 @@ public class LogicImpl1 implements Logic{
         return null;
     }
 
+    private World rain(World inputWorld, int count){
+        return placeRdmValue(inputWorld,ValueType.water,count);
+    }
+
+
+    /**
+     *
+     * @param w     where to be placed
+     * @param vt    what to be placed
+     * @param count how much to be placed
+     * @return
+     */
+    private World placeRdmValue(World w, ValueType vt, int count){
+        final int x = w.getDimensionX();
+        final int y = w.getDimensionY();
+
+        int rx;
+        int ry;
+
+        World tempW = w.getEmptyWorld();
+        tempW.mergeWorld(w);
+        Cell temC, tempNewC;
+
+
+        for(int i=0;i < count;i++){
+            rx=rndGen.nextInt(x);
+            ry=rndGen.nextInt(y);
+            temC=tempW.getCell(rx, ry);//kopie oder referenz nicht festgelegt! deshalb nacher setzen
+            tempNewC= temC.getEmptyCell();
+            tempNewC.mergeValue(new Value(vt, (byte) 1));
+            tempW.setCell(rx, ry, temC.merge(tempNewC));
+        }
+        return tempW;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * If grass is a direct neighbor (2d), it grows by 1 plus 10% of the sum of all neighbor grass
@@ -45,7 +104,7 @@ public class LogicImpl1 implements Logic{
         final int y = inputWorld.getDimensionY();
         final World outputWorld = inputWorld.getEmptyWorld();
 
-
+        int growRate=1;
         int sumGrass=0;
         Cell tempCell;
 
@@ -56,7 +115,16 @@ public class LogicImpl1 implements Logic{
                 sumGrass=calcSum(ix,iy, ValueType.grass,inputWorld);
 
                 if(sumGrass>0){
-                    tempCell.mergeValue(new Value(ValueType.grass,(byte)(1+sumGrass*0.10)));
+                    if(tempCell.getValue(new Value(ValueType.water)).getValueCount()>0){//wenn es Wasser auf dem Feld gibt
+                        tempCell.mergeValue(new Value(ValueType.water,(byte)(-1)));
+                        growRate=4;
+                    }else{
+                        growRate=1;
+                    }
+
+
+                    tempCell.mergeValue(new Value(ValueType.grass,(byte)(growRate+sumGrass*0.01)));
+
                 }
                 outputWorld.setCell(ix,iy,tempCell);
             }

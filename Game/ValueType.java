@@ -9,5 +9,6 @@ public enum ValueType {
     stone,
     bush,
     dung,
+    food,
     water
 }
